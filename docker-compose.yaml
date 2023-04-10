@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+
+  dragon_front_app:
+    container_name: 'dragon_front_app'
+    ports:
+      - 127.0.0.1:3002:3002
+    build:
+      context: ./fullstack-course-front
+    volumes:
+      - './fullstack-course-front/:/app'
+    tty: true
+
+  dragon_backend_app:
+    container_name: 'dragon_backend_app'
+    ports:
+      - 127.0.0.1:3001:3001
+    build:
+      context: ./fullstack-course-backend
+    volumes:
+      - './fullstack-course-backend/:/app'
+    tty: true
+    environment:
+      PORT: 3001
+      PASSWORD: SomeSecretPassword
+      DB_HOST: postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: SomeSecretPassword
+      POSTGRES_DB: dragon
+      PGDATA: /data/postgres
+    volumes:
+       - postgres-db:/data/postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres-db:
+    driver: local      
