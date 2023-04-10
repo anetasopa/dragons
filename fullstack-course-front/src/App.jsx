@@ -29,7 +29,6 @@ class App extends React.Component {
 
         return (
             <div>
-                <h1>Test</h1>
                 {this.props.error.errorType === 'GLOBAL_ERROR_500' ?
                      this.displayToast(): null
                 }
